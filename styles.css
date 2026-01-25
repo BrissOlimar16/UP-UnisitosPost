@@ -1,0 +1,688 @@
+/* ===== RESET BÁSICO ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f5f5f5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===== HEADER Y MENÚ ===== */
+.header {
+    background-color: #770300;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+/* Botón del menú hamburguesa (izquierda) */
+.menu-toggle {
+    display: none;
+    /* Ocultamos el checkbox */
+}
+
+.menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+.menu-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Menú lateral */
+.menu-lateral {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100vh;
+    background-color: #660200;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+    padding-top: 60px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Mostrar menú cuando el checkbox está marcado */
+.menu-toggle:checked~.menu-lateral {
+    transform: translateX(0);
+}
+
+.menu-lateral a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 16px;
+    transition: padding-left 0.3s ease, background-color 0.3s ease;
+}
+
+.menu-lateral a:hover {
+    padding-left: 30px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Overlay para cerrar menú */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+}
+
+.menu-toggle:checked~.menu-overlay {
+    display: block;
+}
+
+/* Logo */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: white;
+    flex: 1;
+}
+
+.logo img {
+    height: 50px;
+}
+
+.logo-texto {
+    display: flex;
+    flex-direction: column;
+}
+
+.titulo-sitio {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.subtitulo-pagina {
+    font-size: 14px;
+    color: white;
+}
+
+/* ===== CONTENIDO PRINCIPAL ===== */
+.main-content {
+    flex: 1;
+    max-width: 1200px;
+    width: 100%;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* Sección principal */
+.seccion-principal {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.titulo-pagina {
+    color: #770300;
+    font-size: 24px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.descripcion-pagina {
+    color: #666;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Contenedor de tarjetas */
+.contenedor-tarjetas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* Columnas para disposición específica */
+.columna-izquierda,
+.columna-derecha {
+    flex: 1;
+    min-width: 300px;
+    max-width: 500px;
+}
+
+/* Tarjetas */
+
+
+.tarjeta {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tarjeta:hover {
+    transform: translateY(-5px);
+    /* Se eleva un poco */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.tarjeta-imagen {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+
+}
+
+.tarjeta-contenido {
+    padding: 15px;
+}
+
+.tarjeta-titulo {
+    color: #770300;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.tarjeta-texto {
+    color: #666;
+    margin-bottom: 15px;
+    line-height: 1.5;
+    text-align: justify;
+}
+
+/* Estilos solo para las tarjeta mas grandes */
+.tarjeta-grande {
+    max-width: 1000px;
+    /* Mucho más ancha que los 500px normales */
+    margin-left: auto;
+    margin-right: auto;
+    justify-items: center;
+}
+
+.tarjeta-grande .tarjeta-imagen {
+    height: 600px;
+    /* Imagen mucho más alta */
+    width: 400px;
+}
+
+.tarjeta-grande .tarjeta-titulo {
+    font-size: 28px;
+    /* Título más llamativo */
+}
+
+.tarjeta-grande .tarjeta-texto {
+    font-size: 18px;
+    /* Texto más legible */
+    margin-left: 16px;
+}
+
+
+/* Botones */
+.boton {
+    display: inline-block;
+    background-color: #770300;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.boton:hover {
+    background-color: #660200;
+}
+
+/* ===== PÁGINA ESPECIALES ===== */
+.carrusel {
+    max-width: 600px;
+    margin: 0 auto 30px;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.carrusel img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    display: block;
+}
+
+/* ===== IFRAME PDF RESPONSIVO ===== */
+.archivo {
+    display: block;
+    max-width: 100%;
+    width: 600px;
+    /* Ancho fijo para desktop */
+    height: 700px;
+    /* Alto fijo para desktop */
+    margin: 20px auto;
+    /* Centrado */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== PÁGINA LOGIN ===== */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 140px);
+    padding: 20px;
+}
+
+.login-box {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-box img {
+    display: block;
+    margin: 0 auto 20px;
+    height: 60px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #770300;
+}
+
+/* ===== GALERIAS ===== */
+/* GALERÍA SIMPLE */
+.galeria {
+    max-width: 800px;
+    margin: 30px auto;
+    text-align: center;
+}
+
+.visor {
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.visor img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.botones {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.boton-galeria {
+    background: #770300;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.boton-galeria:hover {
+    background: #660200;
+}
+
+
+/* ===== FOOTER ===== */
+.footer {
+    background-color: #770300;
+    color: white;
+    padding: 20px;
+    margin-top: 40px;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: space-between;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 250px;
+}
+
+.footer-section h3 {
+    color: black;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.footer-section p {
+    margin-bottom: 8px;
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section li {
+    margin-bottom: 8px;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+/* Estilos específicos para el carrusel SIN JavaScript */
+.carrusel-container {
+    max-width: 800px;
+    margin: 0 auto 40px;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.carrusel-slides {
+    display: flex;
+    width: 500%;
+    animation: slideCarrusel 25s infinite ease-in-out;
+}
+
+.carrusel-slide {
+    width: 20%;
+    flex-shrink: 0;
+}
+
+.carrusel-slide img {
+    width: 100%;
+    height: 400px;
+    object-fit: contain;
+    display: block;
+}
+
+/* Animación del carrusel puro CSS */
+@keyframes slideCarrusel {
+    0% {
+        transform: translateX(0);
+    }
+
+    16% {
+        transform: translateX(0);
+    }
+
+    20% {
+        transform: translateX(-20%);
+    }
+
+    36% {
+        transform: translateX(-20%);
+    }
+
+    40% {
+        transform: translateX(-40%);
+    }
+
+    56% {
+        transform: translateX(-40%);
+    }
+
+    60% {
+        transform: translateX(-60%);
+    }
+
+    76% {
+        transform: translateX(-60%);
+    }
+
+    80% {
+        transform: translateX(-80%);
+    }
+
+    96% {
+        transform: translateX(-80%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+/* Pausar animación al hacer hover */
+.carrusel-container:hover .carrusel-slides {
+    animation-play-state: paused;
+}
+
+/* Controles del carrusel con radio buttons */
+.carrusel-controls {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    z-index: 10;
+}
+
+/* Ocultar radio buttons reales */
+.carrusel-radio {
+    display: none;
+}
+
+/* Estilos para los labels que actúan como puntos */
+.carrusel-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.carrusel-dot:hover {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+/* Efecto al hacer clic en los dots */
+#slide1:checked~.carrusel-controls label[for="slide1"],
+#slide2:checked~.carrusel-controls label[for="slide2"],
+#slide3:checked~.carrusel-controls label[for="slide3"],
+#slide4:checked~.carrusel-controls label[for="slide4"],
+#slide5:checked~.carrusel-controls label[for="slide5"] {
+    background: white;
+    transform: scale(1.2);
+}
+
+/* Icono de corazón */
+.corazon-icono {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.corazon-icono svg {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    color: #770300;
+    transition: all 0.3s ease;
+}
+
+.corazon-icono svg:hover {
+    transform: scale(1.2);
+    color: #ff3366;
+}
+
+/* Responsive para el carrusel */
+@media (max-width: 768px) {
+    .carrusel-slide img {
+        height: 300px;
+    }
+
+    .carrusel-container {
+        max-width: 95%;
+    }
+}
+
+@media (max-width: 480px) {
+    .carrusel-slide img {
+        height: 250px;
+    }
+}
+
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .header {
+        padding: 10px 15px;
+    }
+
+    .logo img {
+        height: 40px;
+    }
+
+    .titulo-sitio {
+        font-size: 16px;
+    }
+
+    .tarjeta-grande {
+        max-width: 100%;
+        margin: 0 auto 15px;
+    }
+
+    .main-content {
+        padding: 0 15px;
+        margin-top: 10px;
+    }
+
+    .columna-izquierda,
+    .columna-derecha {
+        min-width: 100%;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .menu-lateral {
+        width: 200px;
+    }
+
+    .archivo {
+        width: 100%;
+        height: 500px;
+        margin: 15px 0;
+    }
+
+
+    .visor {
+        height: 300px;
+    }
+
+}
+
+@media (max-width: 480px) {
+    .main-content {
+        padding: 0 10px;
+    }
+
+    .seccion-principal {
+        padding: 15px;
+    }
+
+    .titulo-pagina {
+        font-size: 20px;
+    }
+
+    .tarjeta-imagen {
+        height: 180px;
+    }
+
+    .tarjeta-grande {
+        max-width: 100%;
+    }
+
+    .tarjeta-texto {
+        font-size: 15px;
+        line-height: 1.5;
+    }
+
+    .boton {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+
+    .archivo {
+        height: 400px;
+    }
+}

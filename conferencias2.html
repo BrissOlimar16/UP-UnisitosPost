@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UP~UnsitosPost | Conferencias</title>
+    <link rel="stylesheet" href="styles.css">
+
+       
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main class="main-content">
+        <section class="seccion-principal">
+            <h2 class="titulo-pagina">Conferencias</h2>
+            <p class="descripcion-pagina">Eventos académicos y ponencias especializadas</p>
+            
+        <p class="tarjeta-texto">El pasado 09 de enero de 2026, estudiantes de las licenciaturas en Medicina, Nutrición, Enfermería y Odontología participaron en una jornada
+            académica con ponencias virtuales y presenciales, enfocadas en el fortalecimiento de su formación profesional.
+            <br><br>
+            Se abordaron temas clave como derechos y obligaciones del personal sanitario, derecho sanitario, intoxicaciones por animales de importancia médica y trato digno y atención de calidad,
+             impartidos por especialistas en cada área.
+            <br><br>
+            Estas actividades contribuyen a una práctica en salud ética, responsable y con enfoque humano.
+        </p>
+            <!-- GALERÍA SIMPLE -->
+            <div class="galeria">
+                <h3 style="color: #770300; margin-bottom: 20px;">Galería de Conferencias</h3>
+                
+
+
+                <div class="visor">
+                    <img id="foto-actual" src="imagenes/FB_1.jpg" alt="Conferencia">
+                </div>
+                
+                <div class="botones">
+                    <button class="boton-galeria" onclick="cambiarF(-1)">← Anterior</button>
+                    <span id="numero" style="padding: 10px; font-weight: bold;">1 / 4</span>
+                    <button class="boton-galeria" onclick="cambiarF(1)">Siguiente →</button>
+                </div>
+                
+                <p style="color: #666; font-style: italic;" id="descripcion">
+                    Conferencias
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+  
+    
+    <script src="script.js"></script>
+</body>
+</html>

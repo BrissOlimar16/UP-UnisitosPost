@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UP~UnsitosPost | Conferencias</title>
+    <link rel="stylesheet" href="styles.css">
+
+       
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main class="main-content">
+        <section class="seccion-principal">
+            <h2 class="titulo-pagina">Conferencias</h2>
+            <p class="descripcion-pagina">Eventos académicos y ponencias especializadas</p>
+            
+        <p class="tarjeta-texto">Del 09 de diciembre de 2025 y hasta el 14 de enero de 2026, se llevaron a cambo 
+            pláticas con todos los grupos de licenciatura, para reflexionar sobre diversos temas en el marco de UNSIStema con cultura de paz, entre ellos vida universitaria saludable, responsabilidad social y cultura vial.
+            <br>
+            En estas pláticas se promovió el curso Sanamente Libremente: <i>jóvenes por la paz y contra las adicciones</i>, para que los estudiantes exploren, reflexionen y apliquen lo aprendido, con el fin de construir una vida universitaria saludable
+            y libre de adicciones. Se resaltó la importancia de conocer herramientas que les permitan cuidar su bienestar emocional y su salud mental, para fortalecer su desempeño académico y desarrollo personal.
+        </p>
+            <!-- GALERÍA SIMPLE -->
+            <div class="galeria">
+                <h3 style="color: #770300; margin-bottom: 20px;">Galería de Conferencias</h3>
+                
+
+
+                <div class="visor">
+                    <img id="foto-actual" src="imagenes/fc1.jpg" alt="Conferencia">
+                </div>
+                
+                <div class="botones">
+                    <button class="boton-galeria" onclick="cambiarFoto(-1)">← Anterior</button>
+                    <span id="numero" style="padding: 10px; font-weight: bold;">1 / 4</span>
+                    <button class="boton-galeria" onclick="cambiarFoto(1)">Siguiente →</button>
+                </div>
+                
+                <p style="color: #666; font-style: italic;" id="descripcion">
+                    Conferencia inaugural 2024
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+  
+    
+    <script src="script.js"></script>
+</body>
+</html>
