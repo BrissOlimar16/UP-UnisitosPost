@@ -182,7 +182,6 @@ body {
 
 /* Tarjetas */
 
-
 .tarjeta {
     background-color: white;
     border-radius: 8px;
@@ -221,6 +220,19 @@ body {
     margin-bottom: 15px;
     line-height: 1.5;
     text-align: justify;
+}
+
+/* Clase especial para tarjetas con altura uniforme */
+.tarjeta.tarjeta-uniforme {
+    display: flex;
+    flex-direction: column;
+    height: 450px;
+}
+
+.tarjeta.tarjeta-uniforme .tarjeta-contenido {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Estilos solo para las tarjeta mas grandes */
