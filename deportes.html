@@ -13,8 +13,8 @@
 
     <main class="main-content">
         <section class="seccion-principal">
-            <h1 class="titulo-pagina">Deportes</h1>
-            <p class="descripcion-pagina">Únete a la acción deportiva. 
+            <h1 class="titulo-pagina" id="deportes-titulo">Deportes</h1>
+            <p class="descripcion-pagina" id="deportes-descripcion">Únete a la acción deportiva. 
                 Participa en nuestros torneos de basquetbol, fútbol y más. ¡Sé campeón!</p>
         </section>
 
@@ -30,11 +30,7 @@
                         <a href="previaDeportes.html" class="boton">Ver Más</a>
                     </div>
                 </div>
-
-
-
             </div>
-
 
             <!-- Columna Derecha -->
             <div class="columna-derecha">
@@ -47,14 +43,22 @@
                         <a href="infoFutbol.html" class="boton">Ver Más</a>
                     </div>
                 </div>
-
-
             </div>
         </div>
     </main>
 
     <div id="footer-placeholder"></div>
     <script src="script.js"></script>
+    <script>
+        // Cargar contenido dinámico de deportes
+        document.addEventListener('DOMContentLoaded', function() {
+            const data = getData().avisos.deportes;
+            if (data) {
+                document.getElementById('deportes-titulo').textContent = data.titulo;
+                document.getElementById('deportes-descripcion').textContent = data.texto;
+            }
+        });
+    </script>
 </body>
 
 </html>

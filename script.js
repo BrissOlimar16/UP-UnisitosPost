@@ -119,7 +119,6 @@ function cambiarF(direccion) {
 }
 
 
-//función para el login del administrador
 const boton=document.getElementById("Ingresar");
 boton.addEventListener("click", function () {
     const usuario =document.getElementById("user").value;
@@ -141,19 +140,52 @@ const DEFAULT_DATA = {
   inicio: {
     titulo: "Gaceta Universitaria",
     subtitulo: "Acerca de",
-    texto: "Texto inicial de la gaceta universitaria."
+    texto: "Texto inicial de la gaceta universitaria.",
+    imagen: "imagenes/portico.png"
   },
   secciones: {
     conferencias: {
       titulo: "Conferencias",
-      texto: "Contenido de conferencias por defecto."
+      texto: "Contenido de conferencias por defecto.",
+      imagen: "imagenes/conferencia.jpg"
+    },
+    jornadas: {
+      titulo: "Jornadas",
+      texto: "Contenido de jornadas por defecto.",
+      imagen: "imagenes/jornadas.jpg"
+    },
+    cultura: {
+      titulo: "Cultura",
+      texto: "Contenido de cultura por defecto.",
+      imagen: "imagenes/cultura.jpg"
+    },
+    clubes: {
+      titulo: "Clubes",
+      texto: "Contenido de clubes por defecto.",
+      imagen: "imagenes/clubes.jpg"
     }
   },
   avisos: {
     deportes: {
       titulo: "Deportes",
-      texto: "Contenido de deportes por defecto."
+      texto: "Contenido de deportes por defecto.",
+      imagen: "imagenes/basquet.jpg"
+    },
+    concursos: {
+      titulo: "Concursos",
+      texto: "Contenido de concursos por defecto.",
+      imagen: "imagenes/concursos.jpg"
+    },
+    cartelera: {
+      titulo: "Cartelera de la Semana",
+      texto: "Contenido de cartelera por defecto.",
+      imagen: "imagenes/cartelera.jpg"
     }
+  },
+  especiales: {
+    titulo: "Especiales",
+    texto: "Contenido especial por defecto.",
+    imagen: "imagenes/especiales.jpg"
   }
 };
 
@@ -197,31 +229,146 @@ function onModuloChange() {
     }
 
     if (modulo === "inicio") {
+        wrap.style.display = "none";
+        mostrarInicioForm();
     }
 
     if (modulo === "especiales") {
+        mostrarEspecialesForm();
     }
 }
-
 
 
 function renderForm() {
     const sub = document.getElementById("subpagina").value;
     const form = document.getElementById("form-dinamico");
+    const modulo = document.getElementById("modulo").value;
 
     form.innerHTML = "";
 
     if (!sub) return;
 
-    const data = getData().secciones[sub] || { titulo: "", texto: "" };
+    let data = {};
+    
+    if (modulo === "secciones") {
+        data = getData().secciones[sub] || { titulo: "", texto: "", imagen: "" };
+    } else if (modulo === "avisos") {
+        data = getData().avisos[sub] || { titulo: "", texto: "", imagen: "" };
+    }
+
+    const saveFunction = modulo === "avisos" ? `saveAvisos('${sub}')` : `saveSeccion('${sub}')`;
 
     form.innerHTML = `
-        <label>Título</label>
-        <input id="s-titulo" value="${data.titulo}">
-        <label>Texto</label>
-        <textarea id="s-texto">${data.texto}</textarea>
-        <button class="btn" onclick="saveSeccion('${sub}')">Guardar</button>
+        <div class="form-group">
+            <label>Título</label>
+            <input id="s-titulo" type="text" value="${data.titulo}" class="form-input">
+            
+            <label>Texto/Descripción</label>
+            <textarea id="s-texto" class="form-textarea">${data.texto}</textarea>
+            
+            <label>URL de Imagen</label>
+            <input id="s-imagen" type="text" value="${data.imagen || ''}" class="form-input" placeholder="imagenes/ejemplo.jpg">
+            
+            <button class="btn-guardar" onclick="${saveFunction}">Guardar Cambios</button>
+        </div>
     `;
 }
 
 
+function mostrarInicioForm() {
+    const data = getData().inicio;
+    document.getElementById("form-dinamico").innerHTML = `
+        <div class="form-group">
+            <label>Título Principal</label>
+            <input id="i-titulo" type="text" value="${data.titulo}" class="form-input">
+            
+            <label>Subtítulo</label>
+            <input id="i-subtitulo" type="text" value="${data.subtitulo || ''}" class="form-input">
+            
+            <label>Texto/Descripción</label>
+            <textarea id="i-texto" class="form-textarea">${data.texto}</textarea>
+            
+            <label>URL de Imagen</label>
+            <input id="i-imagen" type="text" value="${data.imagen || ''}" class="form-input" placeholder="imagenes/portico.png">
+            
+            <button class="btn-guardar" onclick="saveInicio()">Guardar Cambios</button>
+        </div>
+    `;
+}
+
+function saveInicio() {
+    const data = getData();
+    data.inicio.titulo = document.getElementById("i-titulo").value;
+    data.inicio.subtitulo = document.getElementById("i-subtitulo").value;
+    data.inicio.texto = document.getElementById("i-texto").value;
+    data.inicio.imagen = document.getElementById("i-imagen").value;
+    setData(data);
+    mostrarMensajeExito("Cambios guardados en Inicio");
+}
+
+function mostrarEspecialesForm() {
+    const data = getData().especiales;
+    document.getElementById("form-dinamico").innerHTML = `
+        <div class="form-group">
+            <label>Título</label>
+            <input id="e-titulo" type="text" value="${data.titulo}" class="form-input">
+            
+            <label>Texto/Contenido</label>
+            <textarea id="e-texto" class="form-textarea">${data.texto}</textarea>
+            
+            <label>URL de Imagen</label>
+            <input id="e-imagen" type="text" value="${data.imagen || ''}" class="form-input" placeholder="imagenes/especiales.jpg">
+            
+            <button class="btn-guardar" onclick="saveEspeciales()">Guardar Cambios</button>
+        </div>
+    `;
+}
+
+function saveEspeciales() {
+    const data = getData();
+    data.especiales.titulo = document.getElementById("e-titulo").value;
+    data.especiales.texto = document.getElementById("e-texto").value;
+    data.especiales.imagen = document.getElementById("e-imagen").value;
+    setData(data);
+    mostrarMensajeExito("Cambios guardados en Especiales");
+}
+
+function saveSeccion(sub) {
+    const data = getData();
+    data.secciones[sub].titulo = document.getElementById("s-titulo").value;
+    data.secciones[sub].texto = document.getElementById("s-texto").value;
+    data.secciones[sub].imagen = document.getElementById("s-imagen").value;
+    setData(data);
+    mostrarMensajeExito(`Cambios guardados en ${sub}`);
+}
+
+function saveAvisos(sub) {
+    const data = getData();
+    data.avisos[sub].titulo = document.getElementById("s-titulo").value;
+    data.avisos[sub].texto = document.getElementById("s-texto").value;
+    data.avisos[sub].imagen = document.getElementById("s-imagen").value;
+    setData(data);
+    mostrarMensajeExito(`Cambios guardados en ${sub}`);
+}
+
+
+function mostrarMensajeExito(mensaje) {
+    const div = document.createElement("div");
+    div.className = "success-message";
+    div.textContent = mensaje;
+    document.body.appendChild(div);
+    
+    setTimeout(() => {
+        div.remove();
+    }, 3000);
+}
+
+
+ function cerrarSesion() {
+    localStorage.removeItem("logeado");
+    window.location.href = "index.html";
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    loadComponents();
+});

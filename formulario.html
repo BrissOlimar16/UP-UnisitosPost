@@ -1,43 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="imagenes/logoUNSIS.png">
-    <title>UP - UnsitosPost | Inicio</title>
+    <title>UP - UnsitosPost | Panel de Administración</title>
     <link rel="stylesheet" href="styles.css">
-
 </head>
 <body>
-    <!-- Header simplificado sin menú -->
     <header class="header">
         <a href="index.html" class="logo">
             <img src="imagenes/logoUNSIS.png" alt="Logo UNSIS">
             <div class="logo-texto">
                 <div class="titulo-sitio">UP~UnsitosPost</div>
-                <div class="subtitulo-pagina">Iniciar Sesión</div>
+                <div class="subtitulo-pagina">Panel de Administración</div>
             </div>
         </a>
     </header>
 
-    <div class="editar">
-        <div class="editar-box">
-            <h2>Editar contenido de la página</h2>
-            <select id="modulo" onchange="onModuloChange()">
-                <option value="">-- Selecciona --</option>
-                <option value="inicio">Inicio</option>
-                <option value="secciones">Secciones</option>
-                <option value="avisos">Avisos</option>
-                <option value="especiales">Especiales</option>
-            </select>
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1> Panel de Administración</h1>
+            <p>Gestiona el contenido de todas las páginas de la gaceta universitaria</p>
+        </div>
 
-            <div id="subpagina-wrap" class="formulario">
-                <label>Subpágina</label>
-                <select id="subpagina" onchange="renderForm()"></select>
+        <div class="info-box">
+            <p>Selecciona un módulo y luego edita el contenido. Los cambios se guardarán automáticamente en el navegador.</p>
+        </div>
+
+        <div class="editar">
+            <div class="editar-box">
+                <h2>Selecciona qué deseas editar</h2>
+                
+                <label for="modulo" style="font-weight: bold; margin-bottom: 10px; display: block;">Módulo Principal:</label>
+                <select id="modulo" onchange="onModuloChange()">
+                    <option value="">-- Selecciona un módulo --</option>
+                    <option value="inicio">Página de Inicio</option>
+                    <option value="secciones">Secciones (Conferencias, Cultura, etc)</option>
+                    <option value="avisos">Avisos (Deportes, Concursos, Cartelera)</option>
+                    <option value="especiales">Contenido Especial</option>
+                </select>
+                
+                <div id="subpagina-wrap"  style="display: none;">
+                    <label for="subpagina" style="font-weight: bold; margin-bottom: 10px; display: block;">Selecciona la subsección:</label>
+                    <select id="subpagina" onchange="renderForm()">
+                        <option value="">-- Selecciona --</option>
+                    </select>
+                </div>
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="btn-logout" onclick="cerrarSesion()">Cerrar Sesión</button>
+                </div>
+                <div id="form-dinamico"></div>
             </div>
-            <div id="form-dinamico"></div>
         </div>
     </div>
+
+    <div  id="form-inicio">
+        <h2>Editar Página de Inicio</h2>
+        <input type="text" id="e-titulo" name="titulo">
+        <label for="e-texto">Texto:</label>
+        <textarea id="e-texto"></textarea>
+        <label for="e-imagen">Imagen:</label>
+        <input type="file" id="e-imagen">
+        <button onclick="saveEspeciales()">Guardar cambios</button>
+    </div>
+
 
     <footer class="footer">
         <div class="footer-content">
@@ -59,3 +86,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+
