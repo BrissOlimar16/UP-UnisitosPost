@@ -117,3 +117,21 @@ function cambiarF(direccion) {
     document.getElementById("numero").textContent = (fotActual + 1) + " / " + fot.length;
     document.getElementById("descripcion").textContent = fot[fotActual].texto;
 }
+
+
+//función para el login del administrador
+const boton=document.getElementById("Ingresar");
+boton.addEventListener("click", function () {
+    const usuario =document.getElementById("user").value;
+    const contraseña = document.getElementById("password").value;
+
+    if(usuario === "admin" && contraseña === "admin123") {
+        localStorage.setItem("logeado", "true");
+        window.location.href = "formulario.html";
+        alert("¡Bienvenido, administrador!");
+    }
+    else{
+        alert("Usuario o contraseña incorrectos. Inténtalo de nuevo.");
+    }
+    return false;
+});
