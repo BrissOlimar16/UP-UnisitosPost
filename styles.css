@@ -685,6 +685,9 @@ body {
     max-width: 300px;
 }
 
+.formulario{
+    display: none;
+}
 
 /* Responsive para el carrusel */
 @media (max-width: 768px) {

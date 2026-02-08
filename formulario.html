@@ -23,14 +23,19 @@
     <div class="editar">
         <div class="editar-box">
             <h2>Editar contenido de la página</h2>
-            <select id="seccion">
-            <option value="">-- Selecciona una sección --</option>
-            <option value="inicio">Inicio</option>
-            <option value="secciones">Secciones</option>
+            <select id="modulo" onchange="onModuloChange()">
+                <option value="">-- Selecciona --</option>
+                <option value="inicio">Inicio</option>
+                <option value="secciones">Secciones</option>
                 <option value="avisos">Avisos</option>
-            <option value="servicios">Servicios</option>
-            <option value="especiales">Especiales</option>
+                <option value="especiales">Especiales</option>
             </select>
+
+            <div id="subpagina-wrap" class="formulario">
+                <label>Subpágina</label>
+                <select id="subpagina" onchange="renderForm()"></select>
+            </div>
+            <div id="form-dinamico"></div>
         </div>
     </div>
 
@@ -50,5 +55,7 @@
                 </ul>
             </div>
         </div>
+    </footer>
+    <script src="script.js"></script>
 </body>
 </html>

@@ -135,3 +135,93 @@ boton.addEventListener("click", function () {
     }
     return false;
 });
+
+
+const DEFAULT_DATA = {
+  inicio: {
+    titulo: "Gaceta Universitaria",
+    subtitulo: "Acerca de",
+    texto: "Texto inicial de la gaceta universitaria."
+  },
+  secciones: {
+    conferencias: {
+      titulo: "Conferencias",
+      texto: "Contenido de conferencias por defecto."
+    }
+  },
+  avisos: {
+    deportes: {
+      titulo: "Deportes",
+      texto: "Contenido de deportes por defecto."
+    }
+  }
+};
+
+function getData() {
+  return JSON.parse(localStorage.getItem("cmsData")) || DEFAULT_DATA;
+}
+
+function setData(data) {
+  localStorage.setItem("cmsData", JSON.stringify(data));
+}
+
+
+function onModuloChange() {
+    const modulo = document.getElementById("modulo").value;
+    const wrap = document.getElementById("subpagina-wrap");
+    const subSelect = document.getElementById("subpagina");
+    const form = document.getElementById("form-dinamico");
+
+    wrap.style.display = "none";
+    subSelect.innerHTML = '<option value="">-- Selecciona --</option>';
+    subSelect.value = "";
+    form.innerHTML = "";
+
+    if (modulo === "secciones") {
+        wrap.style.display = "block";
+        subSelect.innerHTML += `
+        <option value="conferencias">Conferencias</option>
+        <option value="jornadas">Jornadas</option>
+        <option value="cultura">Cultura</option>
+        <option value="clubes">Clubes</option>
+        `;
+    }
+
+    if (modulo === "avisos") {
+        wrap.style.display = "block";
+        subSelect.innerHTML += `
+        <option value="deportes">Deportes</option>
+        <option value="concursos">Concursos</option>
+        <option value="cartelera">Cartelera de la semana</option>
+        `;
+    }
+
+    if (modulo === "inicio") {
+    }
+
+    if (modulo === "especiales") {
+    }
+}
+
+
+
+function renderForm() {
+    const sub = document.getElementById("subpagina").value;
+    const form = document.getElementById("form-dinamico");
+
+    form.innerHTML = "";
+
+    if (!sub) return;
+
+    const data = getData().secciones[sub] || { titulo: "", texto: "" };
+
+    form.innerHTML = `
+        <label>Título</label>
+        <input id="s-titulo" value="${data.titulo}">
+        <label>Texto</label>
+        <textarea id="s-texto">${data.texto}</textarea>
+        <button class="btn" onclick="saveSeccion('${sub}')">Guardar</button>
+    `;
+}
+
+
