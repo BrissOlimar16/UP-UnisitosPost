@@ -2,8 +2,8 @@
 
 function loadComponents() {
     Promise.all([
-        fetch('header.html').then(r => r.text()).catch(() => ""),
-        fetch('footer.html').then(r => r.text()).catch(() => "")
+        fetch('/formato/header.html').then(r => r.text()).catch(() => ""),
+        fetch('/formato/footer.html').then(r => r.text()).catch(() => "")
     ]).then(([headerData, footerData]) => {
         const header = document.getElementById('header-placeholder');
         const footer = document.getElementById('footer-placeholder');
@@ -72,10 +72,10 @@ window.addEventListener('resize', updateMenuForScreenSize);
 
 //Conferencia 1
 const fotos = [
-    { img: "imagenes/fc1.jpg", texto: "Curso Sanamente Libremente" },
-    { img: "imagenes/fc2.jpg", texto: "Curso Sanamente Libremente" },
-    { img: "imagenes/fc3.jpg", texto: "Curso Sanamente Libremente" },
-    { img: "imagenes/fc4.jpg", texto: "Curso Sanamente Libremente" }
+    { img: "/imagenes/fc1.jpg", texto: "Curso Sanamente Libremente" },
+    { img: "/imagenes/fc2.jpg", texto: "Curso Sanamente Libremente" },
+    { img: "/imagenes/fc3.jpg", texto: "Curso Sanamente Libremente" },
+    { img: "/imagenes/fc4.jpg", texto: "Curso Sanamente Libremente" }
 ];
 
 
@@ -101,10 +101,10 @@ function cambiarFoto(direccion) {
 
 //Conferencia 2
 const fot = [
-    { img: "imagenes/FB_1.jpg", texto: "Ponencias virtuales y presenciales" },
-    { img: "imagenes/FB_2.jpg", texto: "Ponencias virtuales y presenciales" },
-    { img: "imagenes/FB_3.jpg", texto: "Ponencias virtuales y presenciales" },
-    { img: "imagenes/FB_4.jpg", texto: "Ponencias virtuales y presenciales" }
+    { img: "/imagenes/FB_1.jpg", texto: "Ponencias virtuales y presenciales" },
+    { img: "/imagenes/FB_2.jpg", texto: "Ponencias virtuales y presenciales" },
+    { img: "/imagenes/FB_3.jpg", texto: "Ponencias virtuales y presenciales" },
+    { img: "/imagenes/FB_4.jpg", texto: "Ponencias virtuales y presenciales" }
 ];
 let fotActual = 0;
 
