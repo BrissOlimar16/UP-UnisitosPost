@@ -146,7 +146,7 @@ document.addEventListener("DOMContentLoaded", initLikeEspeciales);
 
 
 
-
+//Función para el login del administrador
 const boton=document.getElementById("Ingresar");
 if(boton){
     boton.addEventListener("click", function () {
@@ -165,16 +165,22 @@ if(boton){
 }
 
 
-
+// Funciones para el CMS
 const DEFAULT_DATA = {
-  inicio: {
-    titulo: "Gaceta Universitaria",
-    subtitulo: "Acerca de",
-    texto: "Texto inicial de la gaceta universitaria.",
-    imagen: "imagenes/portico.png"
-  },
-  secciones: {
-    conferencias: { titulo: "Conferencias", texto: "Contenido", imagen: "imagenes/conferencia.jpg" },
+    secciones: {
+        conferencias: [
+        {
+        titulo: "Conferencias UNSIS",
+        descripcion: "Conferencia inaugural 2024",
+        texto: "Del 09 de diciembre de 2025 y hasta el 14 de enero de 2026...",
+        imagenes: [
+            "imagenes/fc1.jpg",
+            "imagenes/fc2.jpg",
+            "imagenes/fc3.jpg",
+            "imagenes/fc4.jpg"
+        ]
+        }
+    ],
     jornadas: { titulo: "Jornadas", texto: "Contenido", imagen: "imagenes/jornadas.jpg" },
     cultura: { titulo: "Cultura", texto: "Contenido", imagen: "imagenes/cultura.jpg" },
     clubes: { titulo: "Clubes", texto: "Contenido", imagen: "imagenes/clubes.jpg" }
@@ -199,22 +205,25 @@ const DEFAULT_DATA = {
   }
 };
 
+// Funciones para manejar datos en localStorage
 function getData() {
   return JSON.parse(localStorage.getItem("cmsData")) || DEFAULT_DATA;
 }
-
 
 
 function setData(data) {
   localStorage.setItem("cmsData", JSON.stringify(data));
 }
 
-
+// Función para mostrar el formulario según el módulo seleccionado
 function onModuloChange() {
     const modulo = document.getElementById("modulo").value;
     const wrap = document.getElementById("subpagina-wrap");
     const subSelect = document.getElementById("subpagina");
     const form = document.getElementById("form-dinamico");
+    form.style.display = "none";
+    const formAgregar = document.getElementById("form-agregar-conferencia");
+    if (formAgregar) formAgregar.style.display = "none";
 
     wrap.style.display = "none";
     subSelect.innerHTML = '<option value="">-- Selecciona --</option>';
@@ -240,11 +249,6 @@ function onModuloChange() {
         `;
     }
 
-    if (modulo === "inicio") {
-        wrap.style.display = "none";
-        mostrarInicioForm();
-    }
-
     if (modulo === "especiales") {
         document.getElementById("form-dinamico").style.display = "block";
         mostrarEspecialesForm();
@@ -256,8 +260,12 @@ function renderForm() {
     const sub = document.getElementById("subpagina").value;
     const form = document.getElementById("form-dinamico");
     const modulo = document.getElementById("modulo").value;
+    const formAgregar = document.getElementById("form-agregar-conferencia");
 
     form.innerHTML = "";
+
+    // Ocultar siempre el formulario de agregar
+    if (formAgregar) formAgregar.style.display = "none";
 
     if (!sub) return;
 
@@ -285,9 +293,13 @@ function renderForm() {
             <button class="btn-guardar" onclick="${saveFunction}">Guardar Cambios</button>
         </div>
     `;
+    if (modulo === "secciones" && sub === "conferencias") {
+        if (formAgregar) formAgregar.style.display = "block";
+    }
 }
 
 
+// Función para mostrar el formulario de la sección "Especiales"
 function mostrarEspecialesForm() {
     const data = getData().especiales;
     const carrusel = data.carrusel || [];
@@ -331,21 +343,18 @@ function mostrarEspecialesForm() {
     `;
 }
 
+// Función para guardar los cambios realizados en la sección "Especiales"
 async function saveEspeciales() {
     const data = getData();
-
     data.especiales.subtitulo = document.getElementById("e-subtitulo").value;
     data.especiales.autor = document.getElementById("e-autor").value;
     data.especiales.texto = document.getElementById("e-texto").value;
-
     const imagenPrincipalInput = document.getElementById("e-imagen");
     if (imagenPrincipalInput && imagenPrincipalInput.files[0]) {
         data.especiales.imagen = await leerArchivoComoBase64(imagenPrincipalInput.files[0]);
     }
-
     const nuevasImagenes = [];
     let i = 0;
-
     while (document.getElementById(`e-carrusel-${i}`)) {
         const fileInput = document.getElementById(`e-carrusel-${i}`);
         if (fileInput.files[0]) {
@@ -356,24 +365,22 @@ async function saveEspeciales() {
         }
         i++;
     }
-
     data.especiales.carrusel = nuevasImagenes;
     setData(data);
     alert("Cambios guardados en Especiales");
 }
 
-
+// Función para leer un archivo y convertirlo a base64(para las imagenes)
 function leerArchivoComoBase64(file) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
-        reader.onload = () => resolve(reader.result); // base64
+        reader.onload = () => resolve(reader.result); 
         reader.onerror = reject;
         reader.readAsDataURL(file);
     });
 }
 
-
-
+// Función para cargar los datos de "Especiales" en la página correspondiente
 function cargarEspecialesEnPagina() {
     const data = JSON.parse(localStorage.getItem("cmsData"));
     if (!data || !data.especiales) return;
@@ -398,28 +405,10 @@ function cargarEspecialesEnPagina() {
 
 document.addEventListener("DOMContentLoaded", cargarEspecialesEnPagina);
 
-
-
-
-
-function saveSeccion(sub) {
-    const data = getData();
-    data.secciones[sub].titulo = document.getElementById("s-titulo").value;
-    data.secciones[sub].texto = document.getElementById("s-texto").value;
-    data.secciones[sub].imagen = document.getElementById("s-imagen").value;
-    setData(data);
-    alert(`Cambios guardados en ${sub}`);
-}
-
-function saveAvisos(sub) {
-    const data = getData();
-    data.avisos[sub].titulo = document.getElementById("s-titulo").value;
-    data.avisos[sub].texto = document.getElementById("s-texto").value;
-    data.avisos[sub].imagen = document.getElementById("s-imagen").value;
-    setData(data);
-    mostrarMensajeExito(`Cambios guardados en ${sub}`);
-}
-
+document.addEventListener("DOMContentLoaded", () => {
+  const formAgregar = document.getElementById("form-agregar-conferencia");
+  if (formAgregar) formAgregar.style.display = "none";
+});
 
 
  function cerrarSesion() {
@@ -430,3 +419,61 @@ function saveAvisos(sub) {
 document.addEventListener('DOMContentLoaded', function() {
     loadComponents();
 })
+
+
+async function agregarConferencia() {
+    const data = getData();
+
+    if (!Array.isArray(data.secciones.conferencias)) {
+        data.secciones.conferencias = [];
+    }
+
+    const nueva = {
+        titulo: document.getElementById("c-titulo").value,
+        texto: document.getElementById("c-texto").value,
+        descripcion: document.getElementById("c-descripcion").value,
+        imagenes: []
+    };
+
+    let i = 0;
+    while (document.getElementById(`c-img-${i}`)) {
+        const input = document.getElementById(`c-img-${i}`);
+        if (input.files[0]) {
+            const base64 = await leerArchivoComoBase64(input.files[0]);
+            nueva.imagenes.push(base64);
+        }
+        i++;
+    }
+
+    data.secciones.conferencias.push(nueva);
+    setData(data);
+
+    alert("Conferencia agregada correctamente");
+}
+
+
+function cargarConferenciasEnPagina() {
+  const data = getData();
+  const contenedor = document.getElementById("lista-conferencias");
+  if (!contenedor || !data.secciones || !data.secciones.conferencias) return;
+
+  contenedor.innerHTML = "";
+
+  data.secciones.conferencias.forEach((conf, index) => {
+    contenedor.innerHTML += `
+      <article class="conferencia-card">
+        <h3>${conf.titulo}</h3>
+        <p class="tarjeta-texto">${conf.texto}</p>
+
+        <div class="galeria">
+          <div class="visor">
+            <img src="${conf.imagenes[0] || ""}">
+          </div>
+          <p style="color:#666; font-style:italic;">${conf.descripcion}</p>
+        </div>
+      </article>
+    `;
+  });
+}
+
+document.addEventListener("DOMContentLoaded", cargarConferenciasEnPagina);

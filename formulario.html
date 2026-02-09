@@ -34,8 +34,7 @@
                 
                 <label for="modulo" style="font-weight: bold; margin-bottom: 10px; display: block;">Módulo Principal:</label>
                 <select id="modulo" onchange="onModuloChange()">
-                    <option value="">-- Selecciona un módulo --</option>
-                    <option value="inicio">Página de Inicio</option>
+                    <option value="">-- Selecciona --</option>
                     <option value="secciones">Secciones (Conferencias, Cultura, etc)</option>
                     <option value="avisos">Avisos (Deportes, Concursos, Cartelera)</option>
                     <option value="especiales">Contenido Especial</option>
@@ -51,18 +50,28 @@
                     <button class="btn-logout" onclick="cerrarSesion()">Cerrar Sesión</button>
                 </div>
                 <div id="form-dinamico"></div>
+                <div id="form-agregar-conferencia" class="form-group" style="display:none;">
+                    <h3 style="margin-bottom:15px;">Agregar nueva conferencia</h3>
+
+                    <label>Título</label>
+                    <input id="c-titulo" type="text" placeholder="Título" class="form-input">
+
+                    <label>Texto largo</label>
+                    <textarea id="c-texto" placeholder="Texto largo" class="form-textarea"></textarea>
+
+                    <label>Descripción corta</label>
+                    <input id="c-descripcion" type="text" placeholder="Descripción corta" class="form-input">
+
+                    <label>Imágenes</label>
+                    <input type="file" id="c-img-0" accept="image/*" class="form-input">
+                    <input type="file" id="c-img-1" accept="image/*" class="form-input">
+                    <input type="file" id="c-img-2" accept="image/*" class="form-input">
+                    <input type="file" id="c-img-3" accept="image/*" class="form-input">
+
+                    <button class="btn-guardar" onclick="agregarConferencia()">Agregar conferencia</button>
+                </div>
             </div>
         </div>
-    </div>
-
-    <div  id="form-inicio" class="formulario">
-        <h2>Editar Página de Inicio</h2>
-        <input type="text" id="e-titulo" name="titulo">
-        <label for="e-texto">Texto:</label>
-        <textarea id="e-texto"></textarea>
-        <label for="e-imagen">Imagen:</label>
-        <input type="file" id="e-imagen">
-        <button onclick="saveEspeciales()">Guardar cambios</button>
     </div>
 
 
