@@ -34,6 +34,44 @@ body {
     padding: 30px;
 }
 
+/* Estilos para el botón de regresar en el menú */
+.menu-regresar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    text-decoration: none;
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 16px;
+    background-color: rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+    
+}
+
+.menu-regresar:hover {
+    padding-left: 30px;
+    background-color: rgba(255, 255, 255, 0.1);
+    
+}
+
+.icono-regresar {
+    width: 20px;
+    height: 20px;
+    
+    transition: transform 0.3s ease;
+}
+
+.menu-regresar:hover .icono-regresar {
+    transform: translateX(-5px);
+}
+
+
+/* Ocultar botón de regresar en la página de inicio */
+body[data-page="index"] .menu-regresar {
+    display: none;
+}
+
 /* Botón del menú hamburguesa (izquierda) */
 .menu-toggle {
     display: none;
