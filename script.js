@@ -1,17 +1,21 @@
 // script.js - Agregar al inicio del archivo
 
-// Función para cargar header y footer
 function loadComponents() {
     Promise.all([
-        fetch('header.html').then(response => response.text()),
-        fetch('footer.html').then(response => response.text())
+        fetch('header.html').then(r => r.text()).catch(() => ""),
+        fetch('footer.html').then(r => r.text()).catch(() => "")
     ]).then(([headerData, footerData]) => {
-        document.getElementById('header-placeholder').innerHTML = headerData;
-        document.getElementById('footer-placeholder').innerHTML = footerData;
-        setActiveLink(); // Marcar link activo
-        updateMenuForScreenSize(); // Actualizar menú según pantalla
+        const header = document.getElementById('header-placeholder');
+        const footer = document.getElementById('footer-placeholder');
+
+        if (header) header.innerHTML = headerData;
+        if (footer) footer.innerHTML = footerData;
+
+        if (document.querySelector('.menu-lateral')) setActiveLink();
+        if (document.querySelector('.menu-lateral')) updateMenuForScreenSize();
     });
 }
+
 
 // Función para marcar el enlace activo
 function setActiveLink() {
@@ -25,9 +29,9 @@ function setActiveLink() {
     });
 }
 
-// Función para actualizar el menú según el tamaño de pantalla
+
+
 function updateMenuForScreenSize() {
-    const isLargeScreen = window.innerWidth >= 769;
     const menuLateral = document.querySelector('.menu-lateral');
     const menuBtn = document.querySelector('.menu-btn');
     const menuOverlay = document.querySelector('.menu-overlay');
@@ -35,8 +39,11 @@ function updateMenuForScreenSize() {
     const header = document.querySelector('.header');
     const footer = document.querySelector('.footer');
 
+    if (!menuLateral || !menuBtn || !menuOverlay || !mainContent || !header || !footer) return;
+
+    const isLargeScreen = window.innerWidth >= 769;
+
     if (isLargeScreen) {
-        // Agregar clases para pantalla grande
         menuLateral.classList.add('large');
         menuBtn.classList.add('large');
         menuOverlay.classList.add('large');
@@ -44,7 +51,6 @@ function updateMenuForScreenSize() {
         header.classList.add('large');
         footer.classList.add('large');
     } else {
-        // Remover clases para pantalla pequeña
         menuLateral.classList.remove('large');
         menuBtn.classList.remove('large');
         menuOverlay.classList.remove('large');
@@ -53,6 +59,7 @@ function updateMenuForScreenSize() {
         footer.classList.remove('large');
     }
 }
+
 
 // Cargar componentes cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', loadComponents);
@@ -118,22 +125,45 @@ function cambiarF(direccion) {
     document.getElementById("descripcion").textContent = fot[fotActual].texto;
 }
 
+function initLikeEspeciales() {
+  const heart = document.getElementById("like-heart");
+  const countEl = document.getElementById("like-count");
+  if (!heart || !countEl) return;
+
+  let likes = parseInt(localStorage.getItem("especialesLikes")) || 0;
+
+  countEl.textContent = likes;
+
+  heart.addEventListener("click", () => {
+    likes++;
+    heart.classList.add("liked");
+    countEl.textContent = likes;
+    localStorage.setItem("especialesLikes", likes);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", initLikeEspeciales);
+
+
+
 
 const boton=document.getElementById("Ingresar");
-boton.addEventListener("click", function () {
-    const usuario =document.getElementById("user").value;
-    const contraseña = document.getElementById("password").value;
+if(boton){
+    boton.addEventListener("click", function () {
+        const usuario =document.getElementById("user").value;
+        const contraseña = document.getElementById("password").value;
 
-    if(usuario === "admin" && contraseña === "admin123") {
-        localStorage.setItem("logeado", "true");
-        window.location.href = "formulario.html";
-        alert("¡Bienvenido, administrador!");
-    }
-    else{
-        alert("Usuario o contraseña incorrectos. Inténtalo de nuevo.");
-    }
-    return false;
-});
+        if(usuario === "admin" && contraseña === "admin123") {
+            localStorage.setItem("logeado", "true");
+            window.location.href = "formulario.html";
+            alert("¡Bienvenido, administrador!");
+        }
+        else{
+            alert("Usuario o contraseña incorrectos. Inténtalo de nuevo.");
+        }
+    });
+}
+
 
 
 const DEFAULT_DATA = {
@@ -144,54 +174,36 @@ const DEFAULT_DATA = {
     imagen: "imagenes/portico.png"
   },
   secciones: {
-    conferencias: {
-      titulo: "Conferencias",
-      texto: "Contenido de conferencias por defecto.",
-      imagen: "imagenes/conferencia.jpg"
-    },
-    jornadas: {
-      titulo: "Jornadas",
-      texto: "Contenido de jornadas por defecto.",
-      imagen: "imagenes/jornadas.jpg"
-    },
-    cultura: {
-      titulo: "Cultura",
-      texto: "Contenido de cultura por defecto.",
-      imagen: "imagenes/cultura.jpg"
-    },
-    clubes: {
-      titulo: "Clubes",
-      texto: "Contenido de clubes por defecto.",
-      imagen: "imagenes/clubes.jpg"
-    }
+    conferencias: { titulo: "Conferencias", texto: "Contenido", imagen: "imagenes/conferencia.jpg" },
+    jornadas: { titulo: "Jornadas", texto: "Contenido", imagen: "imagenes/jornadas.jpg" },
+    cultura: { titulo: "Cultura", texto: "Contenido", imagen: "imagenes/cultura.jpg" },
+    clubes: { titulo: "Clubes", texto: "Contenido", imagen: "imagenes/clubes.jpg" }
   },
   avisos: {
-    deportes: {
-      titulo: "Deportes",
-      texto: "Contenido de deportes por defecto.",
-      imagen: "imagenes/basquet.jpg"
-    },
-    concursos: {
-      titulo: "Concursos",
-      texto: "Contenido de concursos por defecto.",
-      imagen: "imagenes/concursos.jpg"
-    },
-    cartelera: {
-      titulo: "Cartelera de la Semana",
-      texto: "Contenido de cartelera por defecto.",
-      imagen: "imagenes/cartelera.jpg"
-    }
+    deportes: { titulo: "Deportes", texto: "Contenido", imagen: "imagenes/basquet.jpg" },
+    concursos: { titulo: "Concursos", texto: "Contenido", imagen: "imagenes/concursos.jpg" },
+    cartelera: { titulo: "Cartelera", texto: "Contenido", imagen: "imagenes/cartelera.jpg" }
   },
   especiales: {
-    titulo: "Especiales",
-    texto: "Contenido especial por defecto.",
-    imagen: "imagenes/especiales.jpg"
+    carrusel: [
+      "imagenes/imagen5 (5).jpg",
+      "imagenes/imagen5 (1).jpg",
+      "imagenes/imagen5 (2).jpg",
+      "imagenes/imagen5 (3).jpg",
+      "imagenes/imagen5 (4).jpg"
+    ],
+    subtitulo: "Inundación en la UNSIS",
+    imagen: "imagenes/especiales.jpg",
+    autor: "Redacción UNSIS",
+    texto: "Descripción",
   }
 };
 
 function getData() {
   return JSON.parse(localStorage.getItem("cmsData")) || DEFAULT_DATA;
 }
+
+
 
 function setData(data) {
   localStorage.setItem("cmsData", JSON.stringify(data));
@@ -234,6 +246,7 @@ function onModuloChange() {
     }
 
     if (modulo === "especiales") {
+        document.getElementById("form-dinamico").style.display = "block";
         mostrarEspecialesForm();
     }
 }
@@ -275,63 +288,119 @@ function renderForm() {
 }
 
 
-function mostrarInicioForm() {
-    const data = getData().inicio;
-    document.getElementById("form-dinamico").innerHTML = `
-        <div class="form-group">
-            <label>Título Principal</label>
-            <input id="i-titulo" type="text" value="${data.titulo}" class="form-input">
-            
-            <label>Subtítulo</label>
-            <input id="i-subtitulo" type="text" value="${data.subtitulo || ''}" class="form-input">
-            
-            <label>Texto/Descripción</label>
-            <textarea id="i-texto" class="form-textarea">${data.texto}</textarea>
-            
-            <label>URL de Imagen</label>
-            <input id="i-imagen" type="text" value="${data.imagen || ''}" class="form-input" placeholder="imagenes/portico.png">
-            
-            <button class="btn-guardar" onclick="saveInicio()">Guardar Cambios</button>
-        </div>
-    `;
-}
-
-function saveInicio() {
-    const data = getData();
-    data.inicio.titulo = document.getElementById("i-titulo").value;
-    data.inicio.subtitulo = document.getElementById("i-subtitulo").value;
-    data.inicio.texto = document.getElementById("i-texto").value;
-    data.inicio.imagen = document.getElementById("i-imagen").value;
-    setData(data);
-    mostrarMensajeExito("Cambios guardados en Inicio");
-}
-
 function mostrarEspecialesForm() {
     const data = getData().especiales;
+    const carrusel = data.carrusel || [];
+
+    let inputsCarrusel = carrusel.map((img, index) => `
+         <div style="margin-bottom:10px;">
+            <label>Imagen del carrusel ${index + 1}</label>
+            <input 
+                type="file" 
+                id="e-carrusel-${index}" 
+                class="form-input"
+                accept="image/*"
+            >
+            <div>
+                <small>Actual:</small><br>
+                <img src="${img}" style="max-width:120px; border-radius:8px; margin-top:5px;">
+            </div>
+        </div>
+    `).join("");
+
     document.getElementById("form-dinamico").innerHTML = `
         <div class="form-group">
-            <label>Título</label>
-            <input id="e-titulo" type="text" value="${data.titulo}" class="form-input">
+            <label>Favoritos</label>
+            <input id="e-subtitulo" type="text" value="${data.subtitulo}" class="form-input">
             
-            <label>Texto/Contenido</label>
+            <label>Autor</label>
+            <textarea id="e-autor" class="form-textarea letra-autor">${data.autor}</textarea>
+            
+            <label>Descripción</label>
             <textarea id="e-texto" class="form-textarea">${data.texto}</textarea>
-            
-            <label>URL de Imagen</label>
-            <input id="e-imagen" type="text" value="${data.imagen || ''}" class="form-input" placeholder="imagenes/especiales.jpg">
-            
+
+            <label>Imagen Principal</label>
+            <input id="e-imagen" type="file" class="form-input" accept="image/*">
+            ${data.imagen ? `<img src="${data.imagen}" style="max-width:150px; margin-top:5px;">` : ""}
+           
+            <h4>Imágenes del carrusel</h4>
+            ${inputsCarrusel}
+
             <button class="btn-guardar" onclick="saveEspeciales()">Guardar Cambios</button>
         </div>
     `;
 }
 
-function saveEspeciales() {
+async function saveEspeciales() {
     const data = getData();
-    data.especiales.titulo = document.getElementById("e-titulo").value;
+
+    data.especiales.subtitulo = document.getElementById("e-subtitulo").value;
+    data.especiales.autor = document.getElementById("e-autor").value;
     data.especiales.texto = document.getElementById("e-texto").value;
-    data.especiales.imagen = document.getElementById("e-imagen").value;
+
+    const imagenPrincipalInput = document.getElementById("e-imagen");
+    if (imagenPrincipalInput && imagenPrincipalInput.files[0]) {
+        data.especiales.imagen = await leerArchivoComoBase64(imagenPrincipalInput.files[0]);
+    }
+
+    const nuevasImagenes = [];
+    let i = 0;
+
+    while (document.getElementById(`e-carrusel-${i}`)) {
+        const fileInput = document.getElementById(`e-carrusel-${i}`);
+        if (fileInput.files[0]) {
+            const base64 = await leerArchivoComoBase64(fileInput.files[0]);
+            nuevasImagenes.push(base64);
+        } else {
+            nuevasImagenes.push(data.especiales.carrusel[i]);
+        }
+        i++;
+    }
+
+    data.especiales.carrusel = nuevasImagenes;
     setData(data);
-    mostrarMensajeExito("Cambios guardados en Especiales");
+    alert("Cambios guardados en Especiales");
 }
+
+
+function leerArchivoComoBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result); // base64
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+}
+
+
+
+function cargarEspecialesEnPagina() {
+    const data = JSON.parse(localStorage.getItem("cmsData"));
+    if (!data || !data.especiales) return;
+
+    const subtitulo = document.getElementById("especiales-subtitulo");
+    const autor = document.getElementById("especiales-autor");
+    const texto = document.getElementById("especiales-texto");
+    const imagen = document.getElementById("especiales-imagen");
+
+    if (subtitulo) subtitulo.textContent = data.especiales.subtitulo;
+    if (autor) autor.textContent = "Por: " + data.especiales.autor;
+    if (texto) texto.textContent = data.especiales.texto;
+    if (imagen) imagen.src = data.especiales.imagen;
+
+    if (data.especiales.carrusel) {
+        data.especiales.carrusel.forEach((src, index) => {
+            const img = document.getElementById(`carrusel-img-${index}`);
+            if (img) img.src = src;
+        });
+    }
+}
+
+document.addEventListener("DOMContentLoaded", cargarEspecialesEnPagina);
+
+
+
+
 
 function saveSeccion(sub) {
     const data = getData();
@@ -339,7 +408,7 @@ function saveSeccion(sub) {
     data.secciones[sub].texto = document.getElementById("s-texto").value;
     data.secciones[sub].imagen = document.getElementById("s-imagen").value;
     setData(data);
-    mostrarMensajeExito(`Cambios guardados en ${sub}`);
+    alert(`Cambios guardados en ${sub}`);
 }
 
 function saveAvisos(sub) {
@@ -352,17 +421,6 @@ function saveAvisos(sub) {
 }
 
 
-function mostrarMensajeExito(mensaje) {
-    const div = document.createElement("div");
-    div.className = "success-message";
-    div.textContent = mensaje;
-    document.body.appendChild(div);
-    
-    setTimeout(() => {
-        div.remove();
-    }, 3000);
-}
-
 
  function cerrarSesion() {
     localStorage.removeItem("logeado");
@@ -371,4 +429,4 @@ function mostrarMensajeExito(mensaje) {
 
 document.addEventListener('DOMContentLoaded', function() {
     loadComponents();
-});
+})

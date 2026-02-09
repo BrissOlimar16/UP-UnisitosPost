@@ -671,49 +671,40 @@ body {
 }
 
 /* Icono de corazón */
+.like-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  user-select: none;
+}
+
 .corazon-icono {
-    text-align: left;
-    margin: 30px 0;
+  width: 32px;
+  height: 32px;
+  color:#c82333;
+  cursor: pointer;
+  transition: transform 0.15s ease, color 0.15s ease;
 }
 
 .corazon-icono svg {
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    color: #770300;
-    transition: all 0.3s ease;
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
 }
 
-.corazon-icono svg:hover {
+.corazon-icono:hover {
     transform: scale(1.2);
     color: #ff3366;
 }
 
-
-/*.editar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 80px 20px;
+.corazon-icono.liked {
+  color: #b1222e;
+  transform: scale(1.2);
 }
 
-.editar-box {
-    background: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    max-width: 500px;
-    width: 100%;
-    text-align: center; 
-}
 
-#seccion {
-    margin-top: 20px;
-    padding: 10px;
-    width: 100%;
-    max-width: 300px;
-}
-*/
+
+/*Estilos para el formulario*/
 
 .seleccion{
     font-weight: bold; 
@@ -835,7 +826,7 @@ body {
 }
 
 .btn-guardar {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #770300 0%, #770300 100%);
     color: white;
     padding: 12px 30px;
     border: none;
@@ -844,7 +835,8 @@ body {
     font-weight: bold;
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
-     width: 100%;
+    width: 100%;
+    margin-top: 20px;
 }
 
 .btn-guardar:hover {
@@ -908,6 +900,16 @@ body {
     margin: 0;
     color: #1976D2;
     font-size: 13px;
+}
+
+
+.letra-autor{
+    all: unset;           
+    display: block;
+    font-family: Georgia, serif;
+    font-size: 14px;
+    font-style: italic;
+    color: #666;
 }
 
 /* Responsive para el carrusel */
